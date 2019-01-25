@@ -323,7 +323,7 @@ namespace System
         }
 
         /// <summary>
-        /// Helper function for retrieving a TimeZoneInfo object by <time_zone_name>.
+        /// Helper function for retrieving a TimeZoneInfo object by time_zone_name.
         /// This function wraps the logic necessary to keep the private
         /// SystemTimeZones cache in working order
         ///
@@ -521,7 +521,7 @@ namespace System
 
         /// <summary>
         /// Helper function that takes:
-        ///  1. A string representing a <time_zone_name> registry key name.
+        ///  1. A string representing a time_zone_name registry key name.
         ///  2. A REG_TZI_FORMAT struct containing the default rule.
         ///  3. An AdjustmentRule[] out-parameter.
         /// </summary>
@@ -678,8 +678,7 @@ namespace System
 
         private static unsafe bool TryGetTimeZoneEntryFromRegistry(RegistryKey key, string name, out REG_TZI_FORMAT dtzi)
         {
-            byte[] regValue = key.GetValue(name, null) as byte[];
-            if (regValue == null || regValue.Length != sizeof(REG_TZI_FORMAT))
+            if (!(key.GetValue(name, null) is byte[] regValue) || regValue.Length != sizeof(REG_TZI_FORMAT))
             {
                 dtzi = default;
                 return false;
@@ -905,7 +904,7 @@ namespace System
         }
 
         /// <summary>
-        /// Helper function that takes a string representing a <time_zone_name> registry key name
+        /// Helper function that takes a string representing a time_zone_name registry key name
         /// and returns a TimeZoneInfo instance.
         /// </summary>
         private static TimeZoneInfoResult TryGetTimeZoneFromLocalMachine(string id, out TimeZoneInfo value, out Exception e)
